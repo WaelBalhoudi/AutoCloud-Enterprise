@@ -1,0 +1,32 @@
+# Vagrant
+.vagrant/
+
+# VirtualBox
+*.vdi
+*.vmdk
+*.ova
+
+# Ansible
+*.retry
+
+# SSH
+*.pem
+*.key
+
+# Environment files
+.env
+
+# Logs
+*.log
+
+# Backup files
+*.tar.gz
+*.zip
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
