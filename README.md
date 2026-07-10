@@ -94,7 +94,7 @@ The infrastructure consists of four machines.
 # Architecture Diagram
 
 <p align="center">
-    <img src="../assets/images/architecture.png" alt="AutoCloud Enterprise Architecture" width="100%">
+    <img src="assets/images/architecture.png" alt="AutoCloud Enterprise Architecture" width="100%">
 </p>
 
 ---
