@@ -91,6 +91,12 @@ The infrastructure consists of four machines.
 | monitor01 | Ubuntu Server | Monitoring & Security |
 | client01 | Windows | Employee Workstation |
 
+# Architecture Diagram
+
+<p align="center">
+    <img src="../assets/images/architecture.png" alt="AutoCloud Enterprise Architecture" width="100%">
+</p>
+
 ---
 
 # 🛠 Technology Stack
