@@ -97,6 +97,14 @@ The infrastructure consists of four machines.
     <img src="assets/images/architecture.png" alt="AutoCloud Enterprise Architecture" width="100%">
 </p>
 
+# 🌐 Network Topology
+
+<p align="center">
+    <img src="assets/images/network-topology.png" alt="AutoCloud Enterprise Network Topology" width="100%">
+</p>
+
+For detailed information about the network architecture, IP addressing, communication flow, and security design, see the **[Network Design](documentation/network.md)** documentation.
+
 ---
 
 # 🛠 Technology Stack
@@ -206,21 +214,22 @@ After deployment, the complete infrastructure will be ready for use.
 # 🗺️ Project Roadmap
 
 - [x] Phase 1 — Project Planning & Architecture
-- [ ] Phase 2 — Vagrant Infrastructure
-- [ ] Phase 3 — Network Configuration
-- [ ] Phase 4 — Ansible Base Configuration
-- [ ] Phase 5 — Linux Administration
-- [ ] Phase 6 — Docker Installation
-- [ ] Phase 7 — Nextcloud Deployment
-- [ ] Phase 8 — Identity Management
-- [ ] Phase 9 — Enterprise Storage
-- [ ] Phase 10 — Monitoring Platform
-- [ ] Phase 11 — Security Hardening
-- [ ] Phase 12 — Backup & Disaster Recovery
-- [ ] Phase 13 — Infrastructure Testing
-- [ ] Phase 14 — Documentation
-- [ ] Phase 15 — GitHub Actions CI
-- [ ] Phase 16 — Final Project Release
+- [x] Phase 2 — Enterprise Network Design
+- [ ] Phase 3 — Vagrant Infrastructure
+- [ ] Phase 4 — Network Configuration
+- [ ] Phase 5 — Ansible Base Configuration
+- [ ] Phase 6 — Linux Administration
+- [ ] Phase 7 — Docker Installation
+- [ ] Phase 8 — Nextcloud Deployment
+- [ ] Phase 9 — Identity Management
+- [ ] Phase 10 — Enterprise Storage
+- [ ] Phase 11 — Monitoring Platform
+- [ ] Phase 12 — Security Hardening
+- [ ] Phase 13 — Backup & Disaster Recovery
+- [ ] Phase 14 — Infrastructure Testing
+- [ ] Phase 15 — Documentation
+- [ ] Phase 17 — GitHub Actions CI
+- [ ] Phase 18 — Final Project Release
 
 ---
 
