@@ -38,6 +38,7 @@ This project simulates the IT infrastructure of a medium-sized enterprise and fo
 - [Documentation](#-documentation)
 - [Deployment Workflow](#-deployment-workflow)
 - [Project Roadmap](#-project-roadmap)
+- [Current Project Status](#-project-roadmap)
 - [Skills Demonstrated](#-skills-demonstrated)
 - [Screenshots](#-screenshots)
 - [License](#-license)
@@ -186,7 +187,7 @@ AutoCloud-Enterprise/
 Clone the repository:
 
 ```bash
-git clone https://github.com/<username>/AutoCloud-Enterprise.git
+git clone https://github.com/WaelBalhoudi/AutoCloud-Enterprise.git
 ```
 
 Enter the project directory:
@@ -215,8 +216,8 @@ After deployment, the complete infrastructure will be ready for use.
 
 - [x] Phase 1 — Project Planning & Architecture
 - [x] Phase 2 — Enterprise Network Design
-- [ ] Phase 3 — Vagrant Infrastructure
-- [ ] Phase 4 — Network Configuration
+- [x] Phase 3 — Vagrant Infrastructure
+- [x] Phase 4 — Network Configuration
 - [ ] Phase 5 — Ansible Base Configuration
 - [ ] Phase 6 — Linux Administration
 - [ ] Phase 7 — Docker Installation
@@ -232,6 +233,29 @@ After deployment, the complete infrastructure will be ready for use.
 - [ ] Phase 18 — Final Project Release
 
 ---
+
+# 📈 Current Project Status
+
+Current Phase: **Phase 3 – Infrastructure Provisioning & Networking**
+
+Completed:
+
+- ✅ Enterprise architecture design
+- ✅ Network design
+- ✅ Professional documentation
+- ✅ Vagrant infrastructure
+- ✅ Static IP addressing
+- ✅ Ubuntu Server virtual machines
+- ✅ SSH connectivity
+- ✅ Ansible inventory
+- ✅ Infrastructure validation
+
+Next Phase:
+
+- 🔄 Ansible Base Configuration
+
+---
+
 
 # 💼 Skills Demonstrated
 
