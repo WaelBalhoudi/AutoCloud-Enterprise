@@ -1,0 +1,12 @@
+---
+# Step 5.4 — Create enterprise directories
+# Note: relies on the sysadmins group already existing —
+# users.yml must run before this in main.yml.
+- name: Create enterprise directory structure
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: "{{ admin_group }}"
+    mode: "0775"
+  loop: "{{ company_directories }}"

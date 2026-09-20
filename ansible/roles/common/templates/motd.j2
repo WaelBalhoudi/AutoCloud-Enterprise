@@ -1,0 +1,10 @@
+========================================
+
+ {{ company_name }}
+
+ Host : {{ inventory_hostname }}
+ Role : {{ servers[inventory_hostname].role | default('Server') }}
+
+ Managed by Ansible
+
+========================================

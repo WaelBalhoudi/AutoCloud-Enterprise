@@ -1,0 +1,41 @@
+---
+- name: Ensure hostname matches inventory name
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Include package management tasks
+  ansible.builtin.import_tasks: packages.yml
+
+- name: Include timezone and time sync tasks
+  ansible.builtin.import_tasks: timezone.yml
+
+# users.yml must run before directories.yml — directories.yml
+# assigns ownership to the sysadmins group created here.
+- name: Include user management tasks
+  ansible.builtin.import_tasks: users.yml
+
+- name: Include directory structure tasks
+  ansible.builtin.import_tasks: directories.yml
+
+- name: Include /etc/hosts tasks
+  ansible.builtin.import_tasks: hosts.yml
+
+- name: Include MOTD tasks
+  ansible.builtin.import_tasks: motd.yml
+
+- name: Ensure SSH service is enabled and running
+  ansible.builtin.service:
+    name: ssh
+    state: started
+    enabled: true
+  notify: restart ssh
+
+# Step 5.9 — Run validation
+- name: Validation — print deployment summary
+  ansible.builtin.debug:
+    msg:
+      - "Host: {{ inventory_hostname }}"
+      - "Role: {{ servers[inventory_hostname].role | default('Server') }}"
+      - "Timezone: {{ timezone }}"
+      - "Automation user: {{ admin_user }}"
+      - "Enterprise directories: {{ company_directories | join(', ') }}"

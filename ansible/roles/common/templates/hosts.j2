@@ -1,0 +1,4 @@
+127.0.0.1 localhost
+{% for name, data in servers.items() %}
+{{ data.ip }} {{ name }}.{{ company_domain }} {{ name }}
+{% endfor %}

@@ -1,0 +1,7 @@
+---
+# Fallback values only — group_vars/all.yml takes precedence for the
+# actual infrastructure-wide settings.
+package_state: present
+common_packages: []
+company_directories: []
+servers: {}

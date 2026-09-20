@@ -1,0 +1,13 @@
+---
+# =====================================================
+# AutoCloud Enterprise
+# Master Ansible Playbook
+# =====================================================
+
+- name: Configure AutoCloud Enterprise Infrastructure
+  hosts: all
+  become: true
+  gather_facts: true
+
+  roles:
+    - common

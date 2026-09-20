@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: Wael Balhoudi
+  description: Common baseline configuration for AutoCloud Enterprise servers
+  license: MIT
+  min_ansible_version: "2.14"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - noble
+
+dependencies: []

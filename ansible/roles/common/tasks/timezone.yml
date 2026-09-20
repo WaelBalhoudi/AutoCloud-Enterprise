@@ -1,0 +1,13 @@
+---
+# Step 5.3 — Configure timezone
+- name: Set system timezone
+  community.general.timezone:
+    name: "{{ timezone }}"
+
+# Time section also calls for synchronizing system time.
+# Ubuntu ships systemd-timesyncd by default — just ensure it's active.
+- name: Ensure systemd-timesyncd is enabled and running
+  ansible.builtin.service:
+    name: systemd-timesyncd
+    state: started
+    enabled: true

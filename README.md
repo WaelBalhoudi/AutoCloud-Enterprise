@@ -17,17 +17,29 @@
 
 ---
 
-# 📖 Project Overview
+## 📖 Project Overview
 
-AutoCloud Enterprise is a **production-inspired Linux infrastructure project** designed to demonstrate real-world **Linux System Administration**, **Infrastructure as Code (IaC)**, **DevOps automation**, **private cloud deployment**, **identity management**, **enterprise storage**, **monitoring**, and **security hardening**.
+AutoCloud Enterprise is a **production-inspired Linux infrastructure project** designed to demonstrate practical skills in:
 
-The entire infrastructure is automatically deployed using **Vagrant** and **Ansible**, while modern applications are delivered through **Docker Compose**.
+- Linux System Administration
+- Infrastructure as Code (IaC)
+- DevOps automation
+- Private cloud deployment
+- Identity management
+- Enterprise storage
+- Infrastructure monitoring
+- Security hardening
+- Backup and disaster recovery
 
-This project simulates the IT infrastructure of a medium-sized enterprise and follows industry best practices for automation, documentation, security, and maintainability.
+The infrastructure is provisioned using **Vagrant and VirtualBox**, while server configuration is automated using **Ansible**.
+
+Future services will be deployed using **Docker and Docker Compose**.
+
+The project is developed incrementally through clearly defined implementation phases.
 
 ---
 
-# 📚 Table of Contents
+## 📚 Table of Contents
 
 - [Project Overview](#-project-overview)
 - [Objectives](#-objectives)
@@ -38,14 +50,14 @@ This project simulates the IT infrastructure of a medium-sized enterprise and fo
 - [Documentation](#-documentation)
 - [Deployment Workflow](#-deployment-workflow)
 - [Project Roadmap](#-project-roadmap)
-- [Current Project Status](#-project-roadmap)
+- [Current Project Status](#-current-project-status)
 - [Skills Demonstrated](#-skills-demonstrated)
 - [Screenshots](#-screenshots)
 - [License](#-license)
 
 ---
 
-# 🎯 Objectives
+## 🎯 Objectives
 
 The goal of this project is to design, automate, deploy, secure, monitor, and maintain a realistic enterprise infrastructure using Infrastructure as Code principles.
 
@@ -60,10 +72,11 @@ The project demonstrates how to:
 - Apply security hardening
 - Automate backups
 - Validate infrastructure using automated tests
+- Document infrastructure and operational procedures
 
 ---
 
-# 🚀 Key Features
+## 🚀 Key Features
 
 - Infrastructure as Code (IaC)
 - Automated Virtual Machine Provisioning
@@ -72,7 +85,7 @@ The project demonstrates how to:
 - Private Cloud Platform
 - Docker & Docker Compose
 - Centralized Identity Management
-- Enterprise Storage (LVM + NFS)
+- Enterprise Storage using LVM and NFS
 - Infrastructure Monitoring
 - Security Hardening
 - Backup & Disaster Recovery
@@ -80,39 +93,41 @@ The project demonstrates how to:
 
 ---
 
-# 🏗️ Architecture Overview
+## 🏗️ Architecture Overview
 
-The infrastructure consists of four machines.
+The project uses an automation workstation to provision and manage multiple Linux servers.
 
-| Machine | Operating System | Purpose |
-|----------|------------------|----------|
-| Automation Workstation | Host Machine | Vagrant & Ansible Control Node |
-| cloud01 | Ubuntu Server | Private Cloud Platform |
-| idm01 | Ubuntu Server | Identity Management & Storage |
-| monitor01 | Ubuntu Server | Monitoring & Security |
-| client01 | Windows | Employee Workstation |
+| Machine | Operating System | IP Address | Purpose |
+|----------|------------------|------------|---------|
+| Automation Workstation | Windows 11 + WSL | — | Vagrant & Ansible Control Node |
+| cloud01 | Ubuntu Server 24.04 | 10.10.10.10 | Private Cloud Platform |
+| idm01 | Ubuntu Server 24.04 | 10.10.10.20 | Identity Management & Storage |
+| monitor01 | Ubuntu Server 24.04 | 10.10.10.30 | Monitoring & Security |
+| client01 | Windows | Planned | Employee Workstation |
 
-# Architecture Diagram
+> `cloud01`, `idm01`, and `monitor01` are currently provisioned. `client01` is planned for a later phase.
 
-<p align="center">
-    <img src="assets/images/architecture.png" alt="AutoCloud Enterprise Architecture" width="100%">
-</p>
-
-# 🌐 Network Topology
+### Architecture Diagram
 
 <p align="center">
-    <img src="assets/images/network-topology.png" alt="AutoCloud Enterprise Network Topology" width="100%">
+  <img src="assets/images/architecture.png" alt="AutoCloud Enterprise Architecture" width="100%">
 </p>
 
-For detailed information about the network architecture, IP addressing, communication flow, and security design, see the **[Network Design](documentation/network.md)** documentation.
+### Network Topology
+
+<p align="center">
+  <img src="assets/images/network-topology.png" alt="AutoCloud Enterprise Network Topology" width="100%">
+</p>
+
+For more information, see the [Network Design](documentation/network.md) documentation.
 
 ---
 
-# 🛠 Technology Stack
+## 🛠 Technology Stack
 
 | Category | Technologies |
-|-----------|--------------|
-| Operating System | Ubuntu Server |
+|----------|--------------|
+| Operating System | Ubuntu Server 24.04 |
 | Virtualization | VirtualBox, Vagrant |
 | Automation | Ansible |
 | Containers | Docker, Docker Compose |
@@ -126,9 +141,11 @@ For detailed information about the network architecture, IP addressing, communic
 | Security | Wazuh, Fail2Ban, Auditd |
 | Version Control | Git & GitHub |
 
+> The project is implemented incrementally. Some technologies listed above belong to future phases.
+
 ---
 
-# 📂 Repository Structure
+## 📂 Repository Structure
 
 ```text
 AutoCloud-Enterprise/
@@ -137,11 +154,19 @@ AutoCloud-Enterprise/
 │   └── images/
 │       ├── banner.png
 │       ├── architecture.png
+│       ├── network-topology.png
 │       └── dashboards/
 │
 ├── ansible/
+│   ├── ansible.cfg
+│   ├── group_vars/
+│   │   └── all.yml
+│   ├── host_vars/
 │   ├── inventory/
+│   │   └── hosts.yml
 │   ├── roles/
+│   │   └── common/
+│   ├── requirements.yml
 │   └── site.yml
 │
 ├── docker/
@@ -167,134 +192,219 @@ AutoCloud-Enterprise/
 └── README.md
 ```
 
----
-
-# 📖 Documentation
-
-| Document | Description |
-|----------|-------------|
-| 📐 [Architecture](documentation/architecture.md) | Infrastructure architecture, server roles, and design decisions |
-| 🌐 [Network Design](documentation/network.md) | Network topology, IP addressing, DNS, and communication flow |
-| 🚀 [Installation Guide](documentation/installation.md) | Deployment instructions *(Coming Soon)* |
-| 🔒 [Security Guide](documentation/security.md) | Security hardening and best practices *(Coming Soon)* |
-| 💾 [Backup & Recovery](documentation/backup.md) | Backup strategy and disaster recovery *(Coming Soon)* |
-| 🛠 [Troubleshooting Guide](documentation/troubleshooting.md) | Common issues and solutions *(Coming Soon)* |
+> Per-server IP and role information now lives in the `servers` variable inside `ansible/group_vars/all.yml` — `host_vars/` is currently empty and reserved for any future host-specific overrides.
 
 ---
 
-# 🚀 Deployment Workflow
+## 📖 Documentation
 
-Clone the repository:
+| Document                                                     | Description                                           |
+| ------------------------------------------------------------ | ----------------------------------------------------- |
+| 📐 [Architecture](documentation/architecture.md)             | Infrastructure architecture and server roles          |
+| 🌐 [Network Design](documentation/network.md)                | Network topology, IP addressing and communication     |
+| ⚙️ Phase 4 — Ansible Base Configuration                      | Ansible inventory, common role and base configuration |
+| 🚀 [Installation Guide](documentation/installation.md)       | Project installation and deployment *(In Progress)*   |
+| 🔒 [Security Guide](documentation/security.md)               | Security hardening and best practices *(Coming Soon)* |
+| 💾 [Backup & Recovery](documentation/backup.md)              | Backup strategy and disaster recovery *(Coming Soon)* |
+| 🛠 [Troubleshooting Guide](documentation/troubleshooting.md) | Common issues and solutions                           |
+
+---
+
+## 🚀 Deployment Workflow
+
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/WaelBalhoudi/AutoCloud-Enterprise.git
 ```
 
-Enter the project directory:
+### 2. Enter the project directory
 
 ```bash
 cd AutoCloud-Enterprise
 ```
 
-Provision the infrastructure:
+### 3. Provision the virtual machines
 
 ```bash
 vagrant up
 ```
 
-Deploy and configure the environment:
+This currently provisions:
 
-```bash
-ansible-playbook -i ansible/inventory/hosts.yml ansible/site.yml
+```text
+cloud01    → 10.10.10.10
+idm01      → 10.10.10.20
+monitor01  → 10.10.10.30
 ```
 
-After deployment, the complete infrastructure will be ready for use.
+### 4. Configure the Ansible environment
+
+Because the project is currently located on a Windows-mounted WSL filesystem, Ansible may not automatically load the repository `ansible.cfg`.
+
+Set it explicitly:
+
+```bash
+export ANSIBLE_CONFIG="$PWD/ansible.cfg"
+```
+
+### 5. Test Ansible connectivity
+
+```bash
+ansible all -i ansible/inventory/hosts.yml -m ping
+```
+
+Expected result:
+
+```text
+cloud01    → SUCCESS
+idm01      → SUCCESS
+monitor01  → SUCCESS
+```
+
+### 6. Install required Ansible collections
+
+```bash
+ansible-galaxy collection install -r ansible/requirements.yml
+```
+
+### 7. Deploy the base configuration
+
+```bash
+ansible-playbook ansible/site.yml
+```
+
+### 8. Validate the infrastructure
+
+```bash
+ansible all -i ansible/inventory/hosts.yml -m shell -a \
+"hostname && timedatectl show -p Timezone --value && id automation"
+```
+
+The current Phase 4 configuration prepares the Linux servers for the next implementation phases.
 
 ---
 
-# 🗺️ Project Roadmap
+## 🗺️ Project Roadmap
 
-- [x] Phase 1 — Project Planning & Architecture
-- [x] Phase 2 — Enterprise Network Design
-- [x] Phase 3 — Infrastructure Provisioning & Networking
-- [ ] Phase 4 — Ansible Base Configuration
-- [ ] Phase 5 — Linux Administration
-- [ ] Phase 6 — Docker Engine Installation
-- [ ] Phase 7 — Private Cloud Deployment (Nextcloud)
-- [ ] Phase 8 — Identity Management
-- [ ] Phase 9 — Enterprise Storage
-- [ ] Phase 10 — Monitoring & Observability
-- [ ] Phase 11 — Security Hardening
-- [ ] Phase 12 — Backup & Disaster Recovery
-- [ ] Phase 13 — Infrastructure Testing
-- [ ] Phase 14 — Documentation Finalization
-- [ ] Phase 15 — GitHub Actions CI/CD
-- [ ] Phase 16 — Project Release
-
----
-
-# 📈 Current Project Status
-
-Current Phase: **Phase 3 – Infrastructure Provisioning & Networking**
-
-Completed:
-
-- ✅ Enterprise architecture design
-- ✅ Network design
-- ✅ Professional documentation
-- ✅ Vagrant infrastructure
-- ✅ Static IP addressing
-- ✅ Ubuntu Server virtual machines
-- ✅ SSH connectivity
-- ✅ Ansible inventory
-- ✅ Infrastructure validation
-
-Next Phase:
-
-- 🔄 Ansible Base Configuration
+* [x] Phase 1 — Project Planning & Architecture
+* [x] Phase 2 — Enterprise Network Design
+* [x] Phase 3 — Infrastructure Provisioning & Networking
+* [x] Phase 4 — Ansible Base Configuration
+* [ ] Phase 5 — Linux Administration
+* [ ] Phase 6 — Docker Engine Installation
+* [ ] Phase 7 — Private Cloud Deployment (Nextcloud)
+* [ ] Phase 8 — Identity Management
+* [ ] Phase 9 — Enterprise Storage
+* [ ] Phase 10 — Monitoring & Observability
+* [ ] Phase 11 — Security Hardening
+* [ ] Phase 12 — Backup & Disaster Recovery
+* [ ] Phase 13 — Infrastructure Testing
+* [ ] Phase 14 — Documentation Finalization
+* [ ] Phase 15 — GitHub Actions CI/CD
+* [ ] Phase 16 — Project Release
 
 ---
 
+## 📈 Current Project Status
 
-# 💼 Skills Demonstrated
+### Current Phase
+
+**Phase 4 — Ansible Base Configuration ✅**
+
+### Completed
+
+* ✅ Enterprise architecture design
+* ✅ Network design
+* ✅ Vagrant infrastructure
+* ✅ Static IP addressing
+* ✅ Ubuntu Server 24.04 virtual machines
+* ✅ SSH connectivity
+* ✅ Ansible inventory
+* ✅ Ansible common role
+* ✅ Hostname configuration
+* ✅ Common package installation
+* ✅ Timezone configuration
+* ✅ Time synchronization
+* ✅ `sysadmins` group
+* ✅ `automation` user
+* ✅ Enterprise directory structure
+* ✅ `/etc/hosts` configuration
+* ✅ Custom MOTD
+* ✅ SSH service configuration
+* ✅ Infrastructure validation
+
+### Current Infrastructure
+
+| Server    | IP Address  | Role                  | Status  |
+| --------- | ----------- | --------------------- | ------- |
+| cloud01   | 10.10.10.10 | Private Cloud         | ✅ Ready |
+| idm01     | 10.10.10.20 | Identity & Storage    | ✅ Ready |
+| monitor01 | 10.10.10.30 | Monitoring & Security | ✅ Ready |
+
+### Validation
+
+```text
+Servers managed:    3
+Servers reachable: 3/3
+Servers configured: 3/3
+Failed hosts:      0
+Unreachable hosts: 0
+```
+
+### Next Phase
+
+**Phase 5 — Linux Administration**
+
+---
+
+## 💼 Skills Demonstrated
 
 This project demonstrates practical experience in:
 
-- Linux System Administration
-- Infrastructure as Code (IaC)
-- Configuration Management
-- Virtualization
-- Docker & Containerization
-- Enterprise Networking
-- Identity & Access Management
-- Storage Administration
-- Monitoring & Observability
-- Security Hardening
-- Backup & Recovery
-- Automation
-- DevOps Practices
-- Documentation
+* Linux System Administration
+* Infrastructure as Code
+* Ansible Configuration Management
+* Virtualization
+* Vagrant
+* Enterprise Networking
+* SSH Administration
+* Linux Package Management
+* User and Group Management
+* Time Synchronization
+* Filesystem and Directory Management
+* Infrastructure Automation
+* Docker & Containerization
+* Identity & Access Management
+* Storage Administration
+* Monitoring & Observability
+* Security Hardening
+* Backup & Recovery
+* DevOps Practices
+* Technical Documentation
 
 ---
 
-# 📸 Screenshots
+## 📸 Screenshots
 
-Project screenshots will be added throughout development.
+Screenshots are captured throughout the project to document infrastructure deployment and configuration.
 
-Examples include:
+### Phase 4 — Ansible Base Configuration
 
-- Infrastructure Diagram
-- Virtual Machines
-- Nextcloud Dashboard
-- Grafana Dashboards
-- Wazuh Dashboard
-- Terminal Automation
-- Ansible Playbook Execution
-- Backup & Restore Process
+Recommended evidence:
+
+* Ansible project structure
+* Ansible inventory
+* Ansible connectivity test
+* Successful Ansible playbook execution
+* Base configuration validation
+* Server login and MOTD
+
+Additional screenshots will be added as future phases are completed.
 
 ---
 
-# 🤝 Contributing
+## 🤝 Contributing
 
 Contributions, suggestions, and improvements are welcome.
 
@@ -302,6 +412,6 @@ If you discover a bug or have an idea for enhancement, feel free to open an issu
 
 ---
 
-# 📄 License
+## 📄 License
 
 This project is licensed under the MIT License.

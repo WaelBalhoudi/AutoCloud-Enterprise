@@ -1,0 +1,58 @@
+---
+# =====================================================
+# AutoCloud Enterprise - Global Variables
+# =====================================================
+
+# Company Information
+company_name: "AutoCloud Enterprise"
+company_domain: "autocloud.local"
+
+# Time Configuration
+timezone: "Africa/Tunis"
+
+# Administrator Account
+admin_user: "automation"
+admin_group: "sysadmins"
+
+# Package Management
+package_state: present
+
+# Common Packages
+common_packages:
+  - curl
+  - wget
+  - vim
+  - git
+  - tree
+  - htop
+  - unzip
+  - zip
+  - rsync
+  - net-tools
+  - bash-completion
+  - python3-pip
+  - ufw
+
+# Enterprise Directory Structure
+company_directories:
+  - /opt/company
+  - /opt/company/scripts
+  - /opt/company/backups
+  - /opt/company/logs
+  - /opt/company/configs
+
+# Network Information
+network_subnet: "10.10.10.0/24"
+
+servers:
+  cloud01:
+    ip: "10.10.10.10"
+    role: "Private Cloud"
+
+  idm01:
+    ip: "10.10.10.20"
+    role: "Identity & Storage"
+
+  monitor01:
+    ip: "10.10.10.30"
+    role: "Monitoring & Security"

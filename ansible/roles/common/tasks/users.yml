@@ -1,0 +1,15 @@
+---
+# Step 5.5 — Create administrator account
+- name: Create sysadmins group
+  ansible.builtin.group:
+    name: "{{ admin_group }}"
+    state: present
+
+- name: Create automation user
+  ansible.builtin.user:
+    name: "{{ admin_user }}"
+    groups: "sudo,{{ admin_group }}"
+    shell: /bin/bash
+    create_home: true
+    append: true
+  # SSH keys for this user are added in the Security phase, not here.

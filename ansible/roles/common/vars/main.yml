@@ -1,0 +1,4 @@
+---
+# Reserved for values specific to this role's internal logic
+# (e.g. package manager name) that shouldn't be overridden by
+# group_vars or host_vars. Empty for now.

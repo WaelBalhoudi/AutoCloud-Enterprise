@@ -1,0 +1,9 @@
+---
+# Step 5.7 — Create professional MOTD
+- name: Deploy MOTD from template
+  ansible.builtin.template:
+    src: motd.j2
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: "0644"
