@@ -10,4 +10,5 @@
   gather_facts: true
 
   roles:
-    - common
+    # - common
+    - linux_admin

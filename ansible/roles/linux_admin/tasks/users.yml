@@ -1,0 +1,28 @@
+---
+# Phase 5.2 — User & privilege management
+
+- name: Ensure sysadmins group exists
+  ansible.builtin.group:
+    name: sysadmins
+    state: present
+
+- name: Ensure automation user exists
+  ansible.builtin.user:
+    name: automation
+    state: present
+    shell: /bin/bash
+    groups:
+      - sudo
+      - sysadmins
+    append: true
+    create_home: true
+
+- name: Display automation user information
+  ansible.builtin.command:
+    cmd: id automation
+  register: automation_user_info
+  changed_when: false
+
+- name: Validate automation user
+  ansible.builtin.debug:
+    msg: "{{ automation_user_info.stdout }}"

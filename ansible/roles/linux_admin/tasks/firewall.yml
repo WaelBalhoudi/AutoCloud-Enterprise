@@ -1,0 +1,52 @@
+---
+# Phase 5.4 — Firewall (UFW)
+
+- name: Install UFW
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+
+- name: Allow SSH
+  community.general.ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+    comment: "SSH administration"
+
+- name: Allow HTTP
+  community.general.ufw:
+    rule: allow
+    port: "80"
+    proto: tcp
+    comment: "HTTP web services"
+
+- name: Allow HTTPS
+  community.general.ufw:
+    rule: allow
+    port: "443"
+    proto: tcp
+    comment: "HTTPS web services"
+
+- name: Set default incoming policy
+  community.general.ufw:
+    default: deny
+    direction: incoming
+
+- name: Set default outgoing policy
+  community.general.ufw:
+    default: allow
+    direction: outgoing
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+
+- name: Check UFW status
+  ansible.builtin.command:
+    cmd: ufw status verbose
+  register: ufw_status
+  changed_when: false
+
+- name: Display UFW status
+  ansible.builtin.debug:
+    var: ufw_status.stdout_lines

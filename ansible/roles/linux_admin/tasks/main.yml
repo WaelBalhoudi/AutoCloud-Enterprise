@@ -1,0 +1,38 @@
+---
+# Phase 5 — Linux Administration
+
+# 5.1
+- name: Include Linux baseline tasks
+  ansible.builtin.import_tasks: baseline.yml
+
+# 5.2
+- name: Include user and privilege management tasks
+  ansible.builtin.import_tasks: users.yml
+
+# 5.3
+- name: Include SSH administration and hardening tasks
+  ansible.builtin.import_tasks: ssh.yml
+
+# 5.4
+- name: Include firewall tasks
+  ansible.builtin.import_tasks: firewall.yml
+
+# 5.5
+- name: Include file permissions and ownership tasks
+  ansible.builtin.import_tasks: permissions.yml
+
+# 5.6
+- name: Include storage and disk management tasks
+  ansible.builtin.import_tasks: storage.yml
+
+# 5.7
+- name: Include system services tasks
+  ansible.builtin.import_tasks: services.yml
+
+# 5.8
+- name: Include log management tasks
+  ansible.builtin.import_tasks: logs.yml
+
+# 5.9
+- name: Include system resource monitoring tasks
+  ansible.builtin.import_tasks: monitoring.yml

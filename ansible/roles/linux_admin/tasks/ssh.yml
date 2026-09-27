@@ -1,0 +1,25 @@
+---
+# Phase 5.3 — SSH administration & hardening
+
+- name: Check SSH service state
+  ansible.builtin.command:
+    cmd: systemctl is-active ssh
+  register: ssh_service_state
+  changed_when: false
+
+- name: Display SSH service state
+  ansible.builtin.debug:
+    msg: "SSH service state: {{ ssh_service_state.stdout }}"
+
+- name: Check SSH configuration
+  ansible.builtin.command:
+    cmd: sshd -T
+  register: ssh_effective_config
+  changed_when: false
+
+- name: Display important SSH security settings
+  ansible.builtin.debug:
+    msg:
+      - "PermitRootLogin: {{ ssh_effective_config.stdout | regex_search('permitrootlogin .*') }}"
+      - "PasswordAuthentication: {{ ssh_effective_config.stdout | regex_search('passwordauthentication .*') }}"
+      - "PubkeyAuthentication: {{ ssh_effective_config.stdout | regex_search('pubkeyauthentication .*') }}"

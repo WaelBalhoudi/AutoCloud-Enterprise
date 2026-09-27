@@ -1,0 +1,24 @@
+---
+# Phase 5.7 — System services
+
+- name: Ensure SSH service is enabled and running
+  ansible.builtin.service:
+    name: ssh
+    state: started
+    enabled: true
+
+- name: Ensure systemd-resolved is enabled and running
+  ansible.builtin.service:
+    name: systemd-resolved
+    state: started
+    enabled: true
+
+- name: Check failed systemd services
+  ansible.builtin.command:
+    cmd: systemctl --failed --no-legend
+  register: failed_services
+  changed_when: false
+
+- name: Display failed systemd services
+  ansible.builtin.debug:
+    msg: "{{ failed_services.stdout_lines | default([]) }}"

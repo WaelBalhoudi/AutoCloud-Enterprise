@@ -1,0 +1,55 @@
+---
+# Phase 5.9 — System resource monitoring
+
+- name: Check system uptime and load
+  ansible.builtin.command:
+    cmd: uptime
+  register: system_uptime
+  changed_when: false
+
+- name: Display uptime and load
+  ansible.builtin.debug:
+    var: system_uptime.stdout
+
+- name: Check memory usage
+  ansible.builtin.command:
+    cmd: free -h
+  register: memory_usage
+  changed_when: false
+
+- name: Display memory usage
+  ansible.builtin.debug:
+    var: memory_usage.stdout_lines
+
+- name: Check CPU information
+  ansible.builtin.command:
+    cmd: lscpu
+  register: cpu_information
+  changed_when: false
+
+- name: Display CPU information
+  ansible.builtin.debug:
+    msg:
+      - "CPU architecture: {{ ansible_architecture }}"
+      - "CPU cores: {{ ansible_processor_vcpus }}"
+      - "CPU model: {{ ansible_processor[2] | default('Unknown') }}"
+
+- name: Check disk usage
+  ansible.builtin.command:
+    cmd: df -h /
+  register: root_disk_usage
+  changed_when: false
+
+- name: Display root filesystem usage
+  ansible.builtin.debug:
+    var: root_disk_usage.stdout_lines
+
+- name: Check top CPU-consuming processes
+  ansible.builtin.shell:
+    cmd: "ps -eo pid,comm,%cpu,%mem --sort=-%cpu | head -n 11"
+  register: top_processes
+  changed_when: false
+
+- name: Display top CPU-consuming processes
+  ansible.builtin.debug:
+    var: top_processes.stdout_lines

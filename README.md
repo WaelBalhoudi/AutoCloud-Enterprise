@@ -33,7 +33,7 @@ AutoCloud Enterprise is a **production-inspired Linux infrastructure project** d
 
 The infrastructure is provisioned using **Vagrant and VirtualBox**, while server configuration is automated using **Ansible**.
 
-Future services will be deployed using **Docker and Docker Compose**.
+Future application and infrastructure services will be deployed using **Docker and Docker Compose**.
 
 The project is developed incrementally through clearly defined implementation phases.
 
@@ -141,7 +141,7 @@ For more information, see the [Network Design](documentation/network.md) documen
 | Security | Wazuh, Fail2Ban, Auditd |
 | Version Control | Git & GitHub |
 
-> The project is implemented incrementally. Some technologies listed above belong to future phases.
+> The project is implemented incrementally. Some technologies listed above belong to future phases and are not yet deployed.
 
 ---
 
@@ -165,7 +165,8 @@ AutoCloud-Enterprise/
 │   ├── inventory/
 │   │   └── hosts.yml
 │   ├── roles/
-│   │   └── common/
+│   │   ├── common/
+│   │   └── linux_admin/
 │   ├── requirements.yml
 │   └── site.yml
 │
@@ -177,6 +178,7 @@ AutoCloud-Enterprise/
 │   ├── installation.md
 │   ├── security.md
 │   ├── backup.md
+│   ├── phase-5-linux-administration.md
 │   └── troubleshooting.md
 │
 ├── diagrams/
@@ -192,21 +194,22 @@ AutoCloud-Enterprise/
 └── README.md
 ```
 
-> Per-server IP and role information now lives in the `servers` variable inside `ansible/group_vars/all.yml` — `host_vars/` is currently empty and reserved for any future host-specific overrides.
+> Per-server IP and role information lives in the `servers` variable inside `ansible/group_vars/all.yml`. `host_vars/` is currently empty and reserved for future host-specific overrides.
 
 ---
 
 ## 📖 Documentation
 
-| Document                                                     | Description                                           |
-| ------------------------------------------------------------ | ----------------------------------------------------- |
-| 📐 [Architecture](documentation/architecture.md)             | Infrastructure architecture and server roles          |
-| 🌐 [Network Design](documentation/network.md)                | Network topology, IP addressing and communication     |
-| ⚙️ Phase 4 — Ansible Base Configuration                      | Ansible inventory, common role and base configuration |
-| 🚀 [Installation Guide](documentation/installation.md)       | Project installation and deployment *(In Progress)*   |
-| 🔒 [Security Guide](documentation/security.md)               | Security hardening and best practices *(Coming Soon)* |
-| 💾 [Backup & Recovery](documentation/backup.md)              | Backup strategy and disaster recovery *(Coming Soon)* |
-| 🛠 [Troubleshooting Guide](documentation/troubleshooting.md) | Common issues and solutions                           |
+| Document                                                     | Description                                                                               |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| 📐 [Architecture](documentation/architecture.md)             | Infrastructure architecture and server roles                                              |
+| 🌐 [Network Design](documentation/network.md)                | Network topology, IP addressing and communication                                         |
+| ⚙️ Phase 4 — Ansible Base Configuration                      | Ansible inventory, common role and base configuration                                     |
+| 🐧 Phase 5 — Linux Administration                            | Linux baseline, users, SSH, firewall, permissions, storage, services, logs and monitoring |
+| 🚀 [Installation Guide](documentation/installation.md)       | Project installation and deployment *(In Progress)*                                       |
+| 🔒 [Security Guide](documentation/security.md)               | Security hardening and best practices *(Coming Soon)*                                     |
+| 💾 [Backup & Recovery](documentation/backup.md)              | Backup strategy and disaster recovery *(Coming Soon)*                                     |
+| 🛠 [Troubleshooting Guide](documentation/troubleshooting.md) | Common issues and solutions                                                               |
 
 ---
 
@@ -242,10 +245,22 @@ monitor01  → 10.10.10.30
 
 Because the project is currently located on a Windows-mounted WSL filesystem, Ansible may not automatically load the repository `ansible.cfg`.
 
-Set it explicitly:
+From the project root, set:
 
 ```bash
-export ANSIBLE_CONFIG="$PWD/ansible.cfg"
+export ANSIBLE_CONFIG="$PWD/ansible/ansible.cfg"
+```
+
+Verify:
+
+```bash
+echo "$ANSIBLE_CONFIG"
+```
+
+Expected:
+
+```text
+/mnt/c/Users/<username>/.../AutoCloud-Enterprise/ansible/ansible.cfg
 ```
 
 ### 5. Test Ansible connectivity
@@ -268,20 +283,41 @@ monitor01  → SUCCESS
 ansible-galaxy collection install -r ansible/requirements.yml
 ```
 
-### 7. Deploy the base configuration
+### 7. Deploy the infrastructure configuration
 
 ```bash
 ansible-playbook ansible/site.yml
 ```
 
-### 8. Validate the infrastructure
+The playbook currently applies:
+
+* Common Linux configuration
+* Hostname configuration
+* Package management
+* Timezone and time synchronization
+* User and group management
+* Enterprise directory structure
+* `/etc/hosts` configuration
+* MOTD configuration
+* SSH administration
+* UFW firewall
+* File permissions and ownership
+* Storage and disk information
+* System service validation
+* Log management
+* System resource monitoring
+
+### 8. Validate connectivity
 
 ```bash
-ansible all -i ansible/inventory/hosts.yml -m shell -a \
-"hostname && timedatectl show -p Timezone --value && id automation"
+ansible all -i ansible/inventory/hosts.yml -m ping
 ```
 
-The current Phase 4 configuration prepares the Linux servers for the next implementation phases.
+### 9. Validate the deployment
+
+```bash
+ansible-playbook ansible/site.yml --check
+```
 
 ---
 
@@ -291,7 +327,7 @@ The current Phase 4 configuration prepares the Linux servers for the next implem
 * [x] Phase 2 — Enterprise Network Design
 * [x] Phase 3 — Infrastructure Provisioning & Networking
 * [x] Phase 4 — Ansible Base Configuration
-* [ ] Phase 5 — Linux Administration
+* [x] Phase 5 — Linux Administration
 * [ ] Phase 6 — Docker Engine Installation
 * [ ] Phase 7 — Private Cloud Deployment (Nextcloud)
 * [ ] Phase 8 — Identity Management
@@ -310,16 +346,33 @@ The current Phase 4 configuration prepares the Linux servers for the next implem
 
 ### Current Phase
 
-**Phase 4 — Ansible Base Configuration ✅**
+**Phase 5 — Linux Administration ✅**
 
 ### Completed
 
+#### Phase 1 — Project Planning & Architecture
+
 * ✅ Enterprise architecture design
-* ✅ Network design
-* ✅ Vagrant infrastructure
-* ✅ Static IP addressing
+* ✅ Server role definition
+* ✅ Infrastructure planning
+
+#### Phase 2 — Enterprise Network Design
+
+* ✅ Network topology
+* ✅ IP addressing
+* ✅ Server communication design
+* ✅ Private network design
+
+#### Phase 3 — Infrastructure Provisioning & Networking
+
+* ✅ Vagrant configuration
+* ✅ VirtualBox infrastructure
 * ✅ Ubuntu Server 24.04 virtual machines
+* ✅ Static IP addressing
 * ✅ SSH connectivity
+
+#### Phase 4 — Ansible Base Configuration
+
 * ✅ Ansible inventory
 * ✅ Ansible common role
 * ✅ Hostname configuration
@@ -334,10 +387,23 @@ The current Phase 4 configuration prepares the Linux servers for the next implem
 * ✅ SSH service configuration
 * ✅ Infrastructure validation
 
+#### Phase 5 — Linux Administration
+
+* ✅ Linux baseline and system information
+* ✅ User and privilege management
+* ✅ SSH administration and configuration audit
+* ✅ UFW firewall
+* ✅ File permissions and ownership
+* ✅ Storage and disk inventory
+* ✅ System service management
+* ✅ System log management
+* ✅ System resource monitoring
+* ✅ Ansible-based validation
+
 ### Current Infrastructure
 
 | Server    | IP Address  | Role                  | Status  |
-| --------- | ----------- | --------------------- | ------- |
+| --------- | ----------- | ---------------------- | ------- |
 | cloud01   | 10.10.10.10 | Private Cloud         | ✅ Ready |
 | idm01     | 10.10.10.20 | Identity & Storage    | ✅ Ready |
 | monitor01 | 10.10.10.30 | Monitoring & Security | ✅ Ready |
@@ -345,16 +411,18 @@ The current Phase 4 configuration prepares the Linux servers for the next implem
 ### Validation
 
 ```text
-Servers managed:    3
-Servers reachable: 3/3
+Servers managed:     3
+Servers reachable:  3/3
 Servers configured: 3/3
-Failed hosts:      0
-Unreachable hosts: 0
+Failed hosts:       0
+Unreachable hosts:  0
+Firewall:            Active
+SSH:                 Active
 ```
 
 ### Next Phase
 
-**Phase 5 — Linux Administration**
+**Phase 6 — Docker Engine Installation**
 
 ---
 
@@ -372,11 +440,15 @@ This project demonstrates practical experience in:
 * Linux Package Management
 * User and Group Management
 * Time Synchronization
-* Filesystem and Directory Management
+* File Permissions and Ownership
+* Filesystem and Storage Administration
+* Firewall Configuration
+* System Service Management
+* Log Management
+* System Resource Monitoring
 * Infrastructure Automation
 * Docker & Containerization
 * Identity & Access Management
-* Storage Administration
 * Monitoring & Observability
 * Security Hardening
 * Backup & Recovery
@@ -399,6 +471,22 @@ Recommended evidence:
 * Successful Ansible playbook execution
 * Base configuration validation
 * Server login and MOTD
+* Enterprise directory structure
+
+### Phase 5 — Linux Administration
+
+Recommended evidence:
+
+* Linux baseline information
+* User and privilege validation
+* SSH configuration audit
+* UFW firewall status
+* Enterprise directory permissions
+* Storage and filesystem information
+* System service validation
+* Journal/log validation
+* Resource monitoring
+* Successful Phase 5 deployment
 
 Additional screenshots will be added as future phases are completed.
 

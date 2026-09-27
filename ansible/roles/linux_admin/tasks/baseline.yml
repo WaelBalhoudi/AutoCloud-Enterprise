@@ -1,0 +1,15 @@
+---
+# Phase 5.1 — Linux baseline & system information
+
+- name: Display Linux baseline information
+  ansible.builtin.debug:
+    msg:
+      - "========================================"
+      - "Linux Baseline"
+      - "========================================"
+      - "Hostname: {{ ansible_hostname }}"
+      - "OS: {{ ansible_distribution }} {{ ansible_distribution_version }}"
+      - "Kernel: {{ ansible_kernel }}"
+      - "CPU cores: {{ ansible_processor_vcpus }}"
+      - "Memory: {{ ansible_memtotal_mb }} MB"
+      - "========================================"

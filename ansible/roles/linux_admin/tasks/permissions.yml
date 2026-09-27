@@ -1,0 +1,50 @@
+---
+# Phase 5.5 — File permissions & ownership
+
+- name: Ensure enterprise directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: sysadmins
+    mode: "2775"
+  loop:
+    - /opt/company
+    - /opt/company/scripts
+    - /opt/company/backups
+    - /opt/company/logs
+    - /opt/company/configs
+
+- name: Set secure permissions on configuration directory
+  ansible.builtin.file:
+    path: /opt/company/configs
+    state: directory
+    owner: root
+    group: sysadmins
+    mode: "2770"
+
+- name: Set secure permissions on backup directory
+  ansible.builtin.file:
+    path: /opt/company/backups
+    state: directory
+    owner: root
+    group: sysadmins
+    mode: "2770"
+
+- name: Set secure permissions on log directory
+  ansible.builtin.file:
+    path: /opt/company/logs
+    state: directory
+    owner: root
+    group: sysadmins
+    mode: "2770"
+
+- name: Check enterprise directory permissions
+  ansible.builtin.command:
+    cmd: ls -ld /opt/company /opt/company/scripts /opt/company/backups /opt/company/logs /opt/company/configs
+  register: enterprise_permissions
+  changed_when: false
+
+- name: Display enterprise directory permissions
+  ansible.builtin.debug:
+    var: enterprise_permissions.stdout_lines

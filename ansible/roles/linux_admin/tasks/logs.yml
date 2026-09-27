@@ -1,0 +1,38 @@
+---
+# Phase 5.8 — Log management
+
+- name: Ensure systemd-journald is running
+  ansible.builtin.service:
+    name: systemd-journald
+    state: started
+    enabled: true
+
+- name: Check journal disk usage
+  ansible.builtin.command:
+    cmd: journalctl --disk-usage
+  register: journal_disk_usage
+  changed_when: false
+
+- name: Display journal disk usage
+  ansible.builtin.debug:
+    var: journal_disk_usage.stdout
+
+- name: Collect recent journal warnings
+  ansible.builtin.command:
+    cmd: journalctl -p warning -b --no-pager
+  register: journal_warnings
+  changed_when: false
+
+- name: Display recent journal warnings
+  ansible.builtin.debug:
+    var: journal_warnings.stdout_lines
+
+- name: Collect recent journal errors
+  ansible.builtin.command:
+    cmd: journalctl -p err -b --no-pager
+  register: journal_errors
+  changed_when: false
+
+- name: Display recent journal errors
+  ansible.builtin.debug:
+    var: journal_errors.stdout_lines

@@ -1,0 +1,42 @@
+---
+# Phase 5.6 — Storage & disk management
+
+- name: Collect block device information
+  ansible.builtin.command:
+    cmd: lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS
+  register: block_devices
+  changed_when: false
+
+- name: Display block devices
+  ansible.builtin.debug:
+    var: block_devices.stdout_lines
+
+- name: Collect filesystem usage
+  ansible.builtin.command:
+    cmd: df -hT
+  register: filesystem_usage
+  changed_when: false
+
+- name: Display filesystem usage
+  ansible.builtin.debug:
+    var: filesystem_usage.stdout_lines
+
+- name: Collect inode usage
+  ansible.builtin.command:
+    cmd: df -ih
+  register: inode_usage
+  changed_when: false
+
+- name: Display inode usage
+  ansible.builtin.debug:
+    var: inode_usage.stdout_lines
+
+- name: Check swap
+  ansible.builtin.command:
+    cmd: swapon --show
+  register: swap_status
+  changed_when: false
+
+- name: Display swap status
+  ansible.builtin.debug:
+    var: swap_status.stdout_lines
