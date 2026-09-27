@@ -1,0 +1,18 @@
+---
+# Phase 6.3 — Docker service configuration
+
+- name: Ensure Docker service is enabled and running
+  ansible.builtin.service:
+    name: "{{ docker_service_name }}"
+    state: started
+    enabled: true
+
+- name: Check Docker service state
+  ansible.builtin.command:
+    cmd: systemctl is-active docker
+  register: docker_service_state
+  changed_when: false
+
+- name: Display Docker service state
+  ansible.builtin.debug:
+    msg: "Docker service state: {{ docker_service_state.stdout }}"

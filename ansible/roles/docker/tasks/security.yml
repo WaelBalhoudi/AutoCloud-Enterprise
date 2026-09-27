@@ -1,0 +1,27 @@
+---
+# Phase 6.8 — Docker security baseline
+
+- name: Check Docker Unix socket
+  ansible.builtin.stat:
+    path: /var/run/docker.sock
+  register: docker_socket
+
+- name: Validate Docker Unix socket
+  ansible.builtin.assert:
+    that:
+      - docker_socket.stat.exists
+      - docker_socket.stat.issock
+    fail_msg: "Docker Unix socket is missing or is not a socket."
+    success_msg: "Docker Unix socket is present and valid."
+
+- name: Check Docker daemon command-line configuration
+  ansible.builtin.command:
+    cmd: docker info
+  register: docker_info
+  changed_when: false
+
+- name: Display Docker server information
+  ansible.builtin.debug:
+    msg:
+      - "Docker server is responding successfully."
+      - "Docker root directory: {{ docker_info.stdout | regex_search('Docker Root Dir: .*') | default('Unknown', true) }}"

@@ -1,0 +1,34 @@
+---
+# Phase 6.10 — Docker validation
+
+- name: Verify Docker CLI
+  ansible.builtin.command:
+    cmd: docker --version
+  register: docker_cli_validation
+  changed_when: false
+
+- name: Verify Docker Compose
+  ansible.builtin.command:
+    cmd: docker compose version
+  register: docker_compose_validation
+  changed_when: false
+
+- name: Verify Docker daemon
+  ansible.builtin.command:
+    cmd: docker info
+  register: docker_daemon_validation
+  changed_when: false
+
+- name: Run Docker hello-world container
+  ansible.builtin.command:
+    cmd: docker run --rm hello-world
+  register: docker_hello_world
+  changed_when: true
+
+- name: Display Docker validation results
+  ansible.builtin.debug:
+    msg:
+      - "Docker CLI: {{ docker_cli_validation.stdout }}"
+      - "Docker Compose: {{ docker_compose_validation.stdout }}"
+      - "Docker daemon: responding"
+      - "Hello World: container executed successfully"

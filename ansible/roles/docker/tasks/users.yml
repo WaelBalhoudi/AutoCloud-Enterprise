@@ -1,0 +1,25 @@
+---
+# Phase 6.4 — Docker user configuration
+
+- name: Ensure docker group exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Add automation user to docker group
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups:
+      - docker
+    append: true
+  loop: "{{ docker_users }}"
+
+- name: Check automation group membership
+  ansible.builtin.command:
+    cmd: id automation
+  register: automation_groups
+  changed_when: false
+
+- name: Display automation group membership
+  ansible.builtin.debug:
+    msg: "{{ automation_groups.stdout }}"

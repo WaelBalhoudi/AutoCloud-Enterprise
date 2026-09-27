@@ -4,7 +4,7 @@
 # Master Ansible Playbook
 # =====================================================
 
-- name: Configure AutoCloud Enterprise Infrastructure
+- name: Configure base infrastructure
   hosts: all
   become: true
   gather_facts: true
@@ -12,3 +12,11 @@
   roles:
     # - common
     - linux_admin
+
+- name: Configure Docker infrastructure
+  hosts: docker_hosts
+  become: true
+  gather_facts: true
+
+  roles:
+    - docker

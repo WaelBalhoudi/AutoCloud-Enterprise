@@ -1,0 +1,17 @@
+---
+# Phase 6.2 — Docker Engine installation
+
+- name: Install Docker Engine and related packages
+  ansible.builtin.apt:
+    name: "{{ docker_packages }}"
+    state: present
+
+- name: Verify Docker binary
+  ansible.builtin.command:
+    cmd: docker --version
+  register: docker_version
+  changed_when: false
+
+- name: Display Docker version
+  ansible.builtin.debug:
+    msg: "{{ docker_version.stdout }}"

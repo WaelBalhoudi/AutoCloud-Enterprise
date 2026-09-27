@@ -1,0 +1,12 @@
+---
+# Phase 6.7 — Docker networking
+
+- name: List Docker networks
+  ansible.builtin.command:
+    cmd: docker network ls
+  register: docker_networks
+  changed_when: false
+
+- name: Display Docker networks
+  ansible.builtin.debug:
+    var: docker_networks.stdout_lines

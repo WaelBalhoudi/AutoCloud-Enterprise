@@ -1,0 +1,34 @@
+---
+# Phase 6 — Docker Engine Installation
+
+# 6.1
+- name: Include Docker prerequisite tasks
+  ansible.builtin.import_tasks: prerequisites.yml
+
+# 6.2
+- name: Include Docker installation tasks
+  ansible.builtin.import_tasks: install.yml
+
+# 6.3
+- name: Include Docker service tasks
+  ansible.builtin.import_tasks: service.yml
+
+# 6.4
+- name: Include Docker user configuration tasks
+  ansible.builtin.import_tasks: users.yml
+
+# 6.6
+- name: Include Docker Compose tasks
+  ansible.builtin.import_tasks: docker_compose.yml
+
+# 6.7
+- name: Include Docker networking tasks
+  ansible.builtin.import_tasks: networking.yml
+
+# 6.8
+- name: Include Docker security tasks
+  ansible.builtin.import_tasks: security.yml
+
+# 6.10
+- name: Include Docker validation tasks
+  ansible.builtin.import_tasks: validation.yml

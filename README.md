@@ -2,14 +2,13 @@
 
 ## Automated Private Cloud Infrastructure
 
-![Ubuntu Server](https://img.shields.io/badge/Ubuntu_Server-24.04-E95420?logo=ubuntu&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-System_Administration-FCC624?logo=linux&logoColor=black)
-![Ansible](https://img.shields.io/badge/Ansible-Infrastructure_as_Code-EE0000?logo=ansible&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?logo=docker&logoColor=white)
-![Docker Compose](https://img.shields.io/badge/Docker_Compose-Orchestration-2496ED?logo=docker&logoColor=white)
-![Vagrant](https://img.shields.io/badge/Vagrant-Virtualization-1868F2?logo=vagrant&logoColor=white)
-![Prometheus](https://img.shields.io/badge/Prometheus-Monitoring-E6522C?logo=prometheus&logoColor=white)
-![Grafana](https://img.shields.io/badge/Grafana-Observability-F46800?logo=grafana&logoColor=white)
+
+
+
+
+
+
+\
 
 <p align="center">
   <img src="assets/images/banner.png" alt="AutoCloud Enterprise Banner" width="100%">
@@ -19,41 +18,43 @@
 
 ## 📖 Project Overview
 
-AutoCloud Enterprise is a **production-inspired Linux infrastructure project** designed to demonstrate practical skills in:
+AutoCloud Enterprise is a **production-inspired private cloud infrastructure project** designed to demonstrate practical skills in:
 
-- Linux System Administration
-- Infrastructure as Code (IaC)
-- DevOps automation
-- Private cloud deployment
-- Identity management
-- Enterprise storage
-- Infrastructure monitoring
-- Security hardening
-- Backup and disaster recovery
+* Linux System Administration
+* Infrastructure as Code (IaC)
+* DevOps automation
+* Private cloud deployment
+* Containerization
+* Identity management
+* Enterprise storage
+* Infrastructure monitoring
+* Security hardening
+* Backup and disaster recovery
 
 The infrastructure is provisioned using **Vagrant and VirtualBox**, while server configuration is automated using **Ansible**.
 
-Future application and infrastructure services will be deployed using **Docker and Docker Compose**.
+Docker Engine and Docker Compose are deployed through Ansible on the servers that require container workloads.
 
-The project is developed incrementally through clearly defined implementation phases.
+The project is developed incrementally through clearly defined implementation phases, with each phase introducing and validating a specific infrastructure capability.
 
 ---
 
 ## 📚 Table of Contents
 
-- [Project Overview](#-project-overview)
-- [Objectives](#-objectives)
-- [Key Features](#-key-features)
-- [Architecture Overview](#-architecture-overview)
-- [Technology Stack](#-technology-stack)
-- [Repository Structure](#-repository-structure)
-- [Documentation](#-documentation)
-- [Deployment Workflow](#-deployment-workflow)
-- [Project Roadmap](#-project-roadmap)
-- [Current Project Status](#-current-project-status)
-- [Skills Demonstrated](#-skills-demonstrated)
-- [Screenshots](#-screenshots)
-- [License](#-license)
+* [Project Overview](#-project-overview)
+* [Objectives](#-objectives)
+* [Key Features](#-key-features)
+* [Architecture Overview](#-architecture-overview)
+* [Technology Stack](#-technology-stack)
+* [Repository Structure](#-repository-structure)
+* [Documentation](#-documentation)
+* [Deployment Workflow](#-deployment-workflow)
+* [Project Roadmap](#-project-roadmap)
+* [Current Project Status](#-current-project-status)
+* [Skills Demonstrated](#-skills-demonstrated)
+* [Screenshots](#-screenshots)
+* [Contributing](#-contributing)
+* [License](#-license)
 
 ---
 
@@ -63,49 +64,75 @@ The goal of this project is to design, automate, deploy, secure, monitor, and ma
 
 The project demonstrates how to:
 
-- Provision infrastructure automatically
-- Configure Linux servers with Ansible
-- Deploy containerized services
-- Manage enterprise identity
-- Configure centralized storage
-- Monitor infrastructure health
-- Apply security hardening
-- Automate backups
-- Validate infrastructure using automated tests
-- Document infrastructure and operational procedures
+* Provision infrastructure automatically
+* Configure Linux servers with Ansible
+* Deploy containerized services
+* Manage enterprise identity
+* Configure centralized storage
+* Monitor infrastructure health
+* Apply security hardening
+* Automate backups
+* Validate infrastructure using automated tests
+* Document infrastructure and operational procedures
 
 ---
 
 ## 🚀 Key Features
 
-- Infrastructure as Code (IaC)
-- Automated Virtual Machine Provisioning
-- Enterprise Linux Administration
-- Configuration Management with Ansible
-- Private Cloud Platform
-- Docker & Docker Compose
-- Centralized Identity Management
-- Enterprise Storage using LVM and NFS
-- Infrastructure Monitoring
-- Security Hardening
-- Backup & Disaster Recovery
-- Automated Infrastructure Validation
+* Infrastructure as Code (IaC)
+* Automated Virtual Machine Provisioning
+* Enterprise Linux Administration
+* Configuration Management with Ansible
+* Docker Engine
+* Docker Compose
+* Private Cloud Platform
+* Centralized Identity Management
+* Enterprise Storage using LVM and NFS
+* Infrastructure Monitoring
+* Security Hardening
+* Backup & Disaster Recovery
+* Automated Infrastructure Validation
 
 ---
 
 ## 🏗️ Architecture Overview
 
-The project uses an automation workstation to provision and manage multiple Linux servers.
+The project uses a Windows/WSL automation workstation to provision and manage multiple Ubuntu Server virtual machines.
 
-| Machine | Operating System | IP Address | Purpose |
-|----------|------------------|------------|---------|
-| Automation Workstation | Windows 11 + WSL | — | Vagrant & Ansible Control Node |
-| cloud01 | Ubuntu Server 24.04 | 10.10.10.10 | Private Cloud Platform |
-| idm01 | Ubuntu Server 24.04 | 10.10.10.20 | Identity Management & Storage |
-| monitor01 | Ubuntu Server 24.04 | 10.10.10.30 | Monitoring & Security |
-| client01 | Windows | Planned | Employee Workstation |
+| Machine                | Operating System    | IP Address    | Purpose                            |
+| ---------------------- | ------------------- | ------------- | ---------------------------------- |
+| Automation Workstation | Windows 11 + WSL    | —             | Vagrant & Ansible Control Node     |
+| `cloud01`              | Ubuntu Server 24.04 | `10.10.10.10` | Private Cloud & Docker Host        |
+| `idm01`                | Ubuntu Server 24.04 | `10.10.10.20` | Identity Management & Storage      |
+| `monitor01`            | Ubuntu Server 24.04 | `10.10.10.30` | Monitoring, Security & Docker Host |
+| `client01`             | Windows             | Planned       | Employee Workstation               |
 
-> `cloud01`, `idm01`, and `monitor01` are currently provisioned. `client01` is planned for a later phase.
+### Server Responsibilities
+
+```text
+┌──────────────────────────────────────────────────────────────┐
+│                 AutoCloud Enterprise                         │
+├───────────────────────┬───────────────────────┬──────────────┤
+│ cloud01               │ idm01                 │ monitor01    │
+│ 10.10.10.10           │ 10.10.10.20           │ 10.10.10.30  │
+│                       │                       │              │
+│ Private Cloud         │ Identity Management   │ Monitoring   │
+│ Docker                │ FreeIPA / LDAP        │ Security     │
+│ Docker Compose        │ NFS / LVM             │ Docker       │
+│ Nextcloud (planned)   │                       │ Prometheus   │
+│                       │                       │ Grafana      │
+│                       │                       │ Wazuh        │
+└───────────────────────┴───────────────────────┴──────────────┘
+```
+
+Docker is intentionally deployed only on:
+
+```text
+cloud01
+monitor01
+```
+
+`idm01` is reserved for identity and storage services and does not run Docker.
 
 ### Architecture Diagram
 
@@ -125,23 +152,23 @@ For more information, see the [Network Design](documentation/network.md) documen
 
 ## 🛠 Technology Stack
 
-| Category | Technologies |
-|----------|--------------|
-| Operating System | Ubuntu Server 24.04 |
-| Virtualization | VirtualBox, Vagrant |
-| Automation | Ansible |
-| Containers | Docker, Docker Compose |
-| Cloud Platform | Nextcloud |
-| Reverse Proxy | Nginx |
-| Database | MariaDB |
-| Cache | Redis |
-| Identity Management | FreeIPA |
-| Storage | NFS, LVM |
-| Monitoring | Prometheus, Grafana |
-| Security | Wazuh, Fail2Ban, Auditd |
-| Version Control | Git & GitHub |
+| Category            | Technologies                  |
+| ------------------- | ----------------------------- |
+| Operating System    | Ubuntu Server 24.04           |
+| Virtualization      | VirtualBox, Vagrant           |
+| Automation          | Ansible                       |
+| Containers          | Docker Engine, Docker Compose |
+| Cloud Platform      | Nextcloud                     |
+| Reverse Proxy       | Nginx                         |
+| Database            | MariaDB                       |
+| Cache               | Redis                         |
+| Identity Management | FreeIPA                       |
+| Storage             | NFS, LVM                      |
+| Monitoring          | Prometheus, Grafana           |
+| Security            | Wazuh, Fail2Ban, Auditd       |
+| Version Control     | Git & GitHub                  |
 
-> The project is implemented incrementally. Some technologies listed above belong to future phases and are not yet deployed.
+> The project is implemented incrementally. Technologies such as Nextcloud, FreeIPA, NFS, Prometheus, Grafana, Wazuh and other services belong to later implementation phases unless explicitly marked as completed.
 
 ---
 
@@ -166,7 +193,13 @@ AutoCloud-Enterprise/
 │   │   └── hosts.yml
 │   ├── roles/
 │   │   ├── common/
-│   │   └── linux_admin/
+│   │   ├── linux_admin/
+│   │   └── docker/
+│   │       ├── defaults/
+│   │       ├── handlers/
+│   │       ├── tasks/
+│   │       ├── vars/
+│   │       └── README.md
 │   ├── requirements.yml
 │   └── site.yml
 │
@@ -179,6 +212,7 @@ AutoCloud-Enterprise/
 │   ├── security.md
 │   ├── backup.md
 │   ├── phase-5-linux-administration.md
+│   ├── phase-6-docker.md
 │   └── troubleshooting.md
 │
 ├── diagrams/
@@ -194,22 +228,22 @@ AutoCloud-Enterprise/
 └── README.md
 ```
 
-> Per-server IP and role information lives in the `servers` variable inside `ansible/group_vars/all.yml`. `host_vars/` is currently empty and reserved for future host-specific overrides.
+> Per-server IP and role information is defined in the Ansible inventory and group variables. The `docker` role is applied only to the designated Docker hosts.
 
 ---
 
 ## 📖 Documentation
 
-| Document                                                     | Description                                                                               |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| 📐 [Architecture](documentation/architecture.md)             | Infrastructure architecture and server roles                                              |
-| 🌐 [Network Design](documentation/network.md)                | Network topology, IP addressing and communication                                         |
-| ⚙️ Phase 4 — Ansible Base Configuration                      | Ansible inventory, common role and base configuration                                     |
-| 🐧 Phase 5 — Linux Administration                            | Linux baseline, users, SSH, firewall, permissions, storage, services, logs and monitoring |
-| 🚀 [Installation Guide](documentation/installation.md)       | Project installation and deployment *(In Progress)*                                       |
-| 🔒 [Security Guide](documentation/security.md)               | Security hardening and best practices *(Coming Soon)*                                     |
-| 💾 [Backup & Recovery](documentation/backup.md)              | Backup strategy and disaster recovery *(Coming Soon)*                                     |
-| 🛠 [Troubleshooting Guide](documentation/troubleshooting.md) | Common issues and solutions                                                               |
+| Document                                                     | Description                                                                                         |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| 📐 [Architecture](documentation/architecture.md)             | Infrastructure architecture and server roles                                                        |
+| 🌐 [Network Design](documentation/network.md)                | Network topology, IP addressing and communication                                                   |
+| 🚀 [Installation Guide](documentation/installation.md)       | Project installation and deployment                                                                 |
+| 🐧 Phase 5 — Linux Administration                            | Linux baseline, users, SSH, firewall, permissions, storage, services, logs and monitoring           |
+| 🐳 Phase 6 — Docker Engine Installation                      | Docker Engine, Docker Compose, Docker networking, Docker security validation and Ansible automation |
+| 🔒 [Security Guide](documentation/security.md)               | Security hardening and best practices                                                               |
+| 💾 [Backup & Recovery](documentation/backup.md)              | Backup strategy and disaster recovery                                                               |
+| 🛠 [Troubleshooting Guide](documentation/troubleshooting.md) | Common issues and solutions                                                                         |
 
 ---
 
@@ -245,7 +279,7 @@ monitor01  → 10.10.10.30
 
 Because the project is currently located on a Windows-mounted WSL filesystem, Ansible may not automatically load the repository `ansible.cfg`.
 
-From the project root, set:
+From the project root:
 
 ```bash
 export ANSIBLE_CONFIG="$PWD/ansible/ansible.cfg"
@@ -257,19 +291,13 @@ Verify:
 echo "$ANSIBLE_CONFIG"
 ```
 
-Expected:
-
-```text
-/mnt/c/Users/<username>/.../AutoCloud-Enterprise/ansible/ansible.cfg
-```
-
 ### 5. Test Ansible connectivity
 
 ```bash
 ansible all -i ansible/inventory/hosts.yml -m ping
 ```
 
-Expected result:
+Expected:
 
 ```text
 cloud01    → SUCCESS
@@ -283,7 +311,13 @@ monitor01  → SUCCESS
 ansible-galaxy collection install -r ansible/requirements.yml
 ```
 
-### 7. Deploy the infrastructure configuration
+### 7. Validate the playbook syntax
+
+```bash
+ansible-playbook ansible/site.yml --syntax-check
+```
+
+### 8. Deploy the infrastructure configuration
 
 ```bash
 ansible-playbook ansible/site.yml
@@ -291,14 +325,19 @@ ansible-playbook ansible/site.yml
 
 The playbook currently applies:
 
-* Common Linux configuration
+#### Common Infrastructure
+
 * Hostname configuration
 * Package management
 * Timezone and time synchronization
-* User and group management
-* Enterprise directory structure
 * `/etc/hosts` configuration
-* MOTD configuration
+* Enterprise directory structure
+* Custom MOTD
+* Common system configuration
+
+#### Linux Administration
+
+* User and group management
 * SSH administration
 * UFW firewall
 * File permissions and ownership
@@ -307,16 +346,48 @@ The playbook currently applies:
 * Log management
 * System resource monitoring
 
-### 8. Validate connectivity
+#### Docker Infrastructure
+
+Docker is automatically installed only on the designated Docker hosts:
+
+```text
+cloud01
+monitor01
+```
+
+The Docker role configures:
+
+* Docker Engine
+* Docker CLI
+* containerd
+* Docker Buildx
+* Docker Compose plugin
+* Docker service
+* Docker group configuration
+* Docker Unix socket validation
+* Docker networking validation
+* Docker daemon validation
+* Docker Compose validation
+* `hello-world` container validation
+
+`idm01` does not receive the Docker role because it is reserved for identity and storage services.
+
+### 9. Validate the deployment
 
 ```bash
 ansible all -i ansible/inventory/hosts.yml -m ping
 ```
 
-### 9. Validate the deployment
+Check Docker hosts:
 
 ```bash
-ansible-playbook ansible/site.yml --check
+ansible docker_hosts -i ansible/inventory/hosts.yml -m shell -a "docker --version"
+```
+
+Check Docker Compose:
+
+```bash
+ansible docker_hosts -i ansible/inventory/hosts.yml -m shell -a "docker compose version"
 ```
 
 ---
@@ -328,7 +399,7 @@ ansible-playbook ansible/site.yml --check
 * [x] Phase 3 — Infrastructure Provisioning & Networking
 * [x] Phase 4 — Ansible Base Configuration
 * [x] Phase 5 — Linux Administration
-* [ ] Phase 6 — Docker Engine Installation
+* [x] Phase 6 — Docker Engine Installation
 * [ ] Phase 7 — Private Cloud Deployment (Nextcloud)
 * [ ] Phase 8 — Identity Management
 * [ ] Phase 9 — Enterprise Storage
@@ -346,7 +417,7 @@ ansible-playbook ansible/site.yml --check
 
 ### Current Phase
 
-**Phase 5 — Linux Administration ✅**
+**Phase 6 — Docker Engine Installation ✅**
 
 ### Completed
 
@@ -391,7 +462,7 @@ ansible-playbook ansible/site.yml --check
 
 * ✅ Linux baseline and system information
 * ✅ User and privilege management
-* ✅ SSH administration and configuration audit
+* ✅ SSH configuration audit
 * ✅ UFW firewall
 * ✅ File permissions and ownership
 * ✅ Storage and disk inventory
@@ -400,29 +471,65 @@ ansible-playbook ansible/site.yml --check
 * ✅ System resource monitoring
 * ✅ Ansible-based validation
 
+#### Phase 6 — Docker Engine Installation
+
+* ✅ Docker repository prerequisites
+* ✅ Docker official APT repository
+* ✅ Docker Engine installation
+* ✅ Docker CLI installation
+* ✅ containerd installation
+* ✅ Docker Buildx installation
+* ✅ Docker Compose plugin
+* ✅ Docker service enabled and running
+* ✅ `automation` user Docker group configuration
+* ✅ Docker Unix socket validation
+* ✅ Docker daemon validation
+* ✅ Docker network validation
+* ✅ Docker Compose validation
+* ✅ `hello-world` container validation
+* ✅ Ansible Docker role
+* ✅ Docker hosts separated from identity/storage infrastructure
+* ✅ Ansible syntax validation
+* ✅ Successful deployment across Docker hosts
+
 ### Current Infrastructure
 
-| Server    | IP Address  | Role                  | Status  |
-| --------- | ----------- | ---------------------- | ------- |
-| cloud01   | 10.10.10.10 | Private Cloud         | ✅ Ready |
-| idm01     | 10.10.10.20 | Identity & Storage    | ✅ Ready |
-| monitor01 | 10.10.10.30 | Monitoring & Security | ✅ Ready |
+| Server      | IP Address    | Role                  | Docker | Status  |
+| ----------- | ------------- | --------------------- | ------ | ------- |
+| `cloud01`   | `10.10.10.10` | Private Cloud         | ✅      | ✅ Ready |
+| `idm01`     | `10.10.10.20` | Identity & Storage    | ❌      | ✅ Ready |
+| `monitor01` | `10.10.10.30` | Monitoring & Security | ✅      | ✅ Ready |
 
-### Validation
+### Phase 6 Validation
 
 ```text
-Servers managed:     3
-Servers reachable:  3/3
-Servers configured: 3/3
-Failed hosts:       0
-Unreachable hosts:  0
-Firewall:            Active
-SSH:                 Active
+Docker Hosts:       2
+Docker Hosts Ready: 2/2
+
+cloud01:
+  Docker:           ✅
+  Docker Compose:   ✅
+  Docker daemon:    ✅
+  Docker networking: ✅
+  Hello World:      ✅
+
+monitor01:
+  Docker:           ✅
+  Docker Compose:   ✅
+  Docker daemon:    ✅
+  Docker networking: ✅
+  Hello World:      ✅
+
+idm01:
+  Docker:           ❌ Not required
+  Identity/Storage:  ✅
 ```
 
 ### Next Phase
 
-**Phase 6 — Docker Engine Installation**
+**Phase 7 — Private Cloud Deployment (Nextcloud)**
+
+The next phase will use the Docker infrastructure established during Phase 6 to deploy the private cloud platform on `cloud01`.
 
 ---
 
@@ -446,8 +553,11 @@ This project demonstrates practical experience in:
 * System Service Management
 * Log Management
 * System Resource Monitoring
-* Infrastructure Automation
-* Docker & Containerization
+* Docker Engine Administration
+* Docker Compose
+* Container Networking
+* Container Infrastructure Automation
+* Infrastructure Validation
 * Identity & Access Management
 * Monitoring & Observability
 * Security Hardening
@@ -488,6 +598,23 @@ Recommended evidence:
 * Resource monitoring
 * Successful Phase 5 deployment
 
+### Phase 6 — Docker Engine Installation
+
+Recommended evidence:
+
+* Docker role structure
+* Docker installation through Ansible
+* Docker Engine version
+* Docker Compose version
+* Docker service status
+* Docker network configuration
+* Docker Unix socket validation
+* `docker info` validation
+* Successful `hello-world` container execution
+* Successful Ansible playbook execution
+* Docker hosts configuration
+* Verification that `idm01` does not run Docker
+
 Additional screenshots will be added as future phases are completed.
 
 ---
@@ -496,7 +623,7 @@ Additional screenshots will be added as future phases are completed.
 
 Contributions, suggestions, and improvements are welcome.
 
-If you discover a bug or have an idea for enhancement, feel free to open an issue or submit a pull request.
+If you discover a bug or have an idea for an enhancement, feel free to open an issue or submit a pull request.
 
 ---
 
