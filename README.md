@@ -8,7 +8,6 @@
 
 
 
-\
 
 <p align="center">
   <img src="assets/images/banner.png" alt="AutoCloud Enterprise Banner" width="100%">
